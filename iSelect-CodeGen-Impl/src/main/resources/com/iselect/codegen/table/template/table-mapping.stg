@@ -1,0 +1,30 @@
+group Hibernate-Mapping;
+
+delimiters "$", "$"
+
+DOC_TYPE()::=<<
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+>>
+
+CLASS_TEMP(package, className,tableName )::=<<
+<hibernate-mapping package="$package$" default-access="property">
+    <class name="$className$" table="$tableName$">
+>>
+
+ID_TEMP(name, dbName, generator)::=<<
+        <id name="$name$" column="$dbName$">
+            <generator class="$generator$"/>
+        </id>
+>>
+
+PROP_TEMP(name, dbName)::=<<
+        <property name="$name$" column="$dbName$"/>
+>>
+
+CLASS_TEMP_END()::=<<
+    </class> 
+</hibernate-mapping>
+>>

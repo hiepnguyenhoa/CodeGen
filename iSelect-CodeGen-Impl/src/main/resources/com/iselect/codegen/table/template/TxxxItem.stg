@@ -1,0 +1,19 @@
+group TxxxItem;
+
+delimiters "$", "$"
+
+DOC_TYPE()::=<<
+package com.iselect.kernal.entity.table.item;
+
+import com.iselect.kernal.entity.table.TableItemGenArea;
+import com.iselect.kernal.entity.util.Address;
+
+>>
+
+CLASS_TEMP(package, className,tableName )::=<<
+public interface $className$Item extends TableItem, $className$GenArea{
+>>
+
+CLASS_TEMP_END()::=<<
+}
+>>
