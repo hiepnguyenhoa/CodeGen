@@ -1,0 +1,20 @@
+group TxxxItem;
+
+delimiters "$", "$"
+
+DOC_TYPE()::=<<
+package com.iselect.kernal.table.item.dto;
+
+>>
+
+CLASS_TEMP(package, className,tableName )::=<<
+import com.iselect.kernal.table.dto.TableItemDto;
+import com.iselect.kernal.table.item.entity.$className$Item;
+
+public interface $className$ItemDto extends TableItemDto, $className$Item{
+
+>>
+
+CLASS_TEMP_END()::=<<
+}
+>>

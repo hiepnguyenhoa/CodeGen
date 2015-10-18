@@ -3,10 +3,9 @@ group TxxxGenArea;
 delimiters "$", "$"
 
 DOC_TYPE()::=<<
-package com.iselect.kernal.entity.table.item;
+package com.iselect.kernal.table.item.entity;
 
-import com.iselect.kernal.entity.table.TableItemGenArea;
-import com.iselect.kernal.entity.util.Address;
+import com.iselect.kernal.table.entity.TableItemGenArea;
 
 >>
 
@@ -17,7 +16,7 @@ public interface $className$GenArea extends TableItemGenArea {
 
 PROP_TEMP(name, dbName, type)::=<<
         public $type$ get$name$();
-        public void set$name$($type$ $dbName$);
+        public void set$name$($type$ $name$);
 >>
 
 CLASS_TEMP_END()::=<<

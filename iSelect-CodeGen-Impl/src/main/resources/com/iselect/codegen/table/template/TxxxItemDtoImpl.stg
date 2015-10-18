@@ -1,0 +1,38 @@
+group TxxxItem;
+
+delimiters "$", "$"
+
+DOC_TYPE()::=<<
+package com.iselect.kernal.table.item.dto;
+
+>>
+
+CLASS_TEMP(package, className,tableName )::=<<
+import com.iselect.kernal.table.entity.TableItemAbst;
+
+public class $className$ItemDtoImpl extends TableItemAbst implements $className$ItemDto {
+
+>>
+
+PROP_TEMP_PROP(name, dbName, type)::=<<
+    private $type$ $name$;
+
+>>
+
+PROP_TEMP(name, dbName, type)::=<<
+
+    @Override
+    public $type$ get$name$(){
+        return this.$dbName$;
+    }
+
+    @Override
+    public void set$name$($type$ $dbName$){
+        this.$dbName$=$dbName$;
+    }
+
+>>
+
+CLASS_TEMP_END()::=<<
+}
+>>

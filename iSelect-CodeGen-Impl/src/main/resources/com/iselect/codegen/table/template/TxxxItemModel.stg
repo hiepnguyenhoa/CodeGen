@@ -1,0 +1,19 @@
+group TxxxItem;
+
+delimiters "$", "$"
+
+DOC_TYPE()::=<<
+package com.iselect.kernal.table.item.model;
+
+>>
+
+CLASS_TEMP(package, className,tableName )::=<<
+import com.iselect.kernal.table.item.entity.$className$Item;
+
+public interface $className$ItemModel extends TableItemModel, $className$Item{
+
+>>
+
+CLASS_TEMP_END()::=<<
+}
+>>

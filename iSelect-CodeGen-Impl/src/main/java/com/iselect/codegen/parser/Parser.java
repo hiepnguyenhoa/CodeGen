@@ -70,9 +70,9 @@ public class Parser implements Observable<CGObserver, CGParserEventType, CGParse
     private void parserSheet(Sheet sheet) {
         String packageValue = (String) sheet.getValueAt(1, 0);
         String className = (String) sheet.getValueAt(1, 1);
-        String dbName = (String) sheet.getValueAt(2, 2);
+        String dbName = (String) sheet.getValueAt(2, 1);
 
-        CGClassInfo classInfo = new CGClassInfoImpl(packageValue, className, dbName);
+        CGClassInfo classInfo = new CGClassInfoImpl(packageValue, className, dbName, null);
         notifyObserver(CGParserEventType.NEW_CLASS, classInfo);
 
         String type = null;

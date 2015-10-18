@@ -17,6 +17,22 @@ import org.apache.commons.beanutils.BeanUtils;
  * @author Hiep
  */
 public class CGComponentFactoryImpl extends CGComponentFactoryAbst<CGPropertyComponentAbs>{
+    
+    private static volatile CGComponentFactory componentFactor;
+    
+    private CGComponentFactoryImpl(){
+        
+    }
+    
+    public  static CGComponentFactory getInstance(){
+        if(componentFactor==null){
+            synchronized(CGComponentFactoryImpl.class) {
+                if(componentFactor==null)
+                    componentFactor = new CGComponentFactoryImpl();
+            }
+        }
+        return componentFactor;
+    }
 
     @Override
     public CGPropertyComponentAbs buildIdentifyComponent(CGPropertyInfo propertyInfo) {

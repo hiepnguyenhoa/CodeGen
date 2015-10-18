@@ -1,0 +1,70 @@
+group TxxxItem;
+
+delimiters "$", "$"
+
+DOC_TYPE()::=<<
+package com.iselect.kernal.table.item.model;
+
+>>
+
+CLASS_TEMP(package, className,tableName )::=<<
+
+import com.iselect.kernal.table.item.entity.$className$GenArea;
+
+public class $className$ItemModelImpl extends TableItemModelAbst implements $className$ItemModel{
+
+    private String genAreaXML;
+
+    @Override
+    public String getGenArea() {
+        return this.genAreaXML;
+    }
+
+    @Override
+    public void setGenArea(String genArea) {
+        this.genAreaXML = genArea;
+    }
+    
+    private final $className$GenArea genAreaModel = new $className$GenAreaImpl();
+
+>>
+
+PROP_TEMP(name, dbName, type)::=<<
+    @Override
+    public $type$ get$name$(){
+        return this.genAreaModel.get$name$();
+    }
+
+    @Override
+    public void set$name$($type$ $dbName$){
+        this.genAreaModel.set$name$($dbName$);
+    }
+
+>>
+
+CLASS_TEMP_END()::=<<
+}
+
+>>
+
+CLASS_TEMP_INNER(package, className,tableName )::=<<
+
+class $className$GenAreaImpl implements $className$GenArea{
+
+>>
+
+PROP_TEMP_INNER(name, dbName, type)::=<<
+    private static $type$ $dbName$;
+
+    @Override
+    public $type$ get$name$(){
+        return this.$dbName$;
+    }
+
+    @Override
+    public void set$name$($type$ $dbName$){
+        this.$dbName$=$dbName$;
+    }
+
+>>
+

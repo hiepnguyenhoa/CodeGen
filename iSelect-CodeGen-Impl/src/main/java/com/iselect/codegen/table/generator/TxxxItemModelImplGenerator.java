@@ -20,9 +20,9 @@ import org.stringtemplate.v4.STGroup;
  *
  * @author Hiep
  */
-public class TxxxGenAreaGenerator extends CGCodeGeneratorAbs<ClassComponentImpl, CGPropertyComponentAbs>{
+public class TxxxItemModelImplGenerator extends CGCodeGeneratorAbs<ClassComponentImpl, CGPropertyComponentAbs> {
 
-    public TxxxGenAreaGenerator(String template, String baseDir, String subDir) {
+    public TxxxItemModelImplGenerator(String template, String baseDir, String subDir) {
         super(template, baseDir, subDir);
     }
 
@@ -34,32 +34,43 @@ public class TxxxGenAreaGenerator extends CGCodeGeneratorAbs<ClassComponentImpl,
         ST template = null;
         template = _group.getInstanceOf("DOC_TYPE");
         sb.append(template.render());
-        
-        template = _group.getInstanceOf(ClassComponentImpl.TEMP_ID);
+
+        sb.append(this.buildClass(template, _group, t, true));
+        sb.append(this.buildClass(template, _group, t, false));
+
+        try {
+            Path path = FileUtil.createFile(this.getBaseDir(), this.getSubDir(), t.getPackageName() + ".model");
+            FileUtil.writeFile(path, t.getName() + "ItemModelImpl.java", sb.toString());
+        } catch (IOException ex) {
+            Logger.getLogger(MappingGenerator.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private String buildClass(ST template, STGroup group, ClassComponentImpl t, boolean outer) {
+        StringBuilder sb = new StringBuilder();
+
+        String templateId = outer ? ClassComponentImpl.TEMP_ID : ClassComponentImpl.TEMP_ID + "_INNER";
+        template = group.getInstanceOf(templateId);
         template.add("package", t.getPackageName());
         template.add("className", t.getName());
         template.add("tableName", t.getDbName() == null || "".equals(t.getDbName().trim()) ? t.getName() : t.getDbName());
         sb.append(template.render());
-        
+
         for (CGPropertyComponentAbs prop : t.getPropertyComponents()) {
-            if(prop.getInherit()!=null&&!prop.getInherit().equalsIgnoreCase("InnerClass"))
+            if (prop.getInherit() != null && !prop.getInherit().equalsIgnoreCase("InnerClass")) {
                 continue;
-            template = _group.getInstanceOf(prop.getTemplateId());
+            }
+            templateId = outer ? prop.getTemplateId() : prop.getTemplateId() + "_INNER";
+            template = group.getInstanceOf(templateId);
             template.add("name", prop.getName().substring(0, 1).toUpperCase() + prop.getName().substring(1));
             template.add("dbName", prop.getDbName() == null || "".equals(prop.getDbName().trim()) ? prop.getName() : prop.getDbName());
             template.add("type", prop.getType());
             sb.append(template.render());
         }
-        
-        template = _group.getInstanceOf("CLASS_TEMP_END");
+
+        template = group.getInstanceOf("CLASS_TEMP_END");
         sb.append(template.render());
-        
-        try {
-            Path path=FileUtil.createFile(this.getBaseDir(), this.getSubDir(), t.getPackageName()+".entity");
-            FileUtil.writeFile(path, t.getName()+"GenArea.java", sb.toString());
-        } catch (IOException ex) {
-            Logger.getLogger(MappingGenerator.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
+        return sb.toString();
     }
-    
 }

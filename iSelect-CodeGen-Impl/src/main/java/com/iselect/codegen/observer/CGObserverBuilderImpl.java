@@ -12,7 +12,11 @@ import com.iselect.codegen.factory.FactoryType;
 import com.iselect.codegen.generator.CGCodeGenerator;
 import com.iselect.codegen.table.generator.MappingGenerator;
 import com.iselect.codegen.table.generator.TxxxGenAreaGenerator;
+import com.iselect.codegen.table.generator.TxxxItemDtoGenerator;
+import com.iselect.codegen.table.generator.TxxxItemDtoImplGenerator;
 import com.iselect.codegen.table.generator.TxxxItemGenerator;
+import com.iselect.codegen.table.generator.TxxxItemModelGenerator;
+import com.iselect.codegen.table.generator.TxxxItemModelImplGenerator;
 
 /**
  *
@@ -39,7 +43,7 @@ public class CGObserverBuilderImpl implements CGObserverBuilder<CGObserverTypeIm
                 observer = ObserverProducer.getObserver(oType);
                 factory = FactoryProducer.getFactory(FactoryType.FACTORY_XML);
                 observer.setFactory(factory);
-                
+  
                 /* Mapping Generation */
                 template = config.getProperty("template.table.mapping");
                 subDir = config.getProperty("generation.table.mapping");
@@ -62,6 +66,30 @@ public class CGObserverBuilderImpl implements CGObserverBuilder<CGObserverTypeIm
                 template = config.getProperty("template.table.titem");
                 subDir = config.getProperty("generation.table.TxxItem");
                 generator = new TxxxItemGenerator(template, baseDir, subDir);
+                observer.addCodegener(generator);
+                
+                /*TxxItemModel Interface Generation*/
+                template = config.getProperty("template.table.titemModel");
+                subDir = config.getProperty("generation.table.TxxItemModel");
+                generator = new TxxxItemModelGenerator(template, baseDir, subDir);
+                observer.addCodegener(generator);
+                
+                /*TxxItemModel Implement Generation*/
+                template = config.getProperty("template.table.titemModelImpl");
+                subDir = config.getProperty("generation.table.TxxItemModelImpl");
+                generator = new TxxxItemModelImplGenerator(template, baseDir, subDir);
+                observer.addCodegener(generator);
+                
+                /*TxxItemDto Interface Generation*/
+                template = config.getProperty("template.table.item.dto");
+                subDir = config.getProperty("generation.table.TxxItemDto");
+                generator = new TxxxItemDtoGenerator(template, baseDir, subDir);
+                observer.addCodegener(generator);
+                
+                /*TxxItemDto Implement Generation*/
+                template = config.getProperty("template.table.item.dtoImpl");
+                subDir = config.getProperty("generation.table.TxxItemDtoImpl");
+                generator = new TxxxItemDtoImplGenerator(template, baseDir, subDir);
                 observer.addCodegener(generator);
                 break;
         }

@@ -34,20 +34,18 @@ public class TxxxItemGenerator extends CGCodeGeneratorAbs<ClassComponentImpl, CG
         ST template = null;
         template = _group.getInstanceOf("DOC_TYPE");
         sb.append(template.render());
-        sb.append("\n\r");
         
         template = _group.getInstanceOf(ClassComponentImpl.TEMP_ID);
         template.add("package", t.getPackageName());
         template.add("className", t.getName());
         template.add("tableName", t.getDbName() == null || "".equals(t.getDbName().trim()) ? t.getName() : t.getDbName());
         sb.append(template.render());
-        sb.append("\n\r");
         
         template = _group.getInstanceOf("CLASS_TEMP_END");
         sb.append(template.render());
         
         try {
-            Path path=FileUtil.createFile(this.getBaseDir(), this.getSubDir(), t.getPackageName());
+            Path path=FileUtil.createFile(this.getBaseDir(), this.getSubDir(), t.getPackageName()+".entity");
             FileUtil.writeFile(path, t.getName()+"Item.java", sb.toString());
         } catch (IOException ex) {
             Logger.getLogger(MappingGenerator.class.getName()).log(Level.SEVERE, null, ex);

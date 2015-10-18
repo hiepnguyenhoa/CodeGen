@@ -28,7 +28,6 @@ public class Configuration {
 
     public void loadConfig() throws IOException {
         try {
-//            input = new FileInputStream(conf);
             input = getClass().getClassLoader().getResourceAsStream(conf);
             prop.load(input);
         } catch (IOException ioe) {

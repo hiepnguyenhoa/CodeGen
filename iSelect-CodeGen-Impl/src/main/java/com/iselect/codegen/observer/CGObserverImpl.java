@@ -9,7 +9,6 @@ import com.iselect.codegen.component.CGPropertyComponentAbs;
 import com.iselect.codegen.generator.CGCodeGenerator;
 import com.iselect.codegen.component.ClassComponentImpl;
 import com.iselect.codegen.factory.CGComponentFactoryImpl;
-import com.iselect.codegen.observer.CGObserverAbs;
 import com.iselect.codegen.parser.component.CGClassInfo;
 import com.iselect.codegen.parser.component.CGPropertyInfo;
 import com.iselect.codegen.parser.event.CGParserEvent;
@@ -22,9 +21,21 @@ import org.apache.commons.beanutils.BeanUtils;
  */
 public final class CGObserverImpl extends CGObserverAbs<ClassComponentImpl, CGComponentFactoryImpl, CGCodeGenerator> {
 
+    private static CGObserver observer;
+    
     private ClassComponentImpl classTag;
     
-    public CGObserverImpl() {
+    private CGObserverImpl() {
+    }
+    
+    public static CGObserver getInstance(){
+        if(observer==null){
+            synchronized(CGObserverImpl.class){
+                if(observer==null)
+                    observer=new CGObserverImpl();
+            }
+        }
+        return observer;
     }
 
     @Override

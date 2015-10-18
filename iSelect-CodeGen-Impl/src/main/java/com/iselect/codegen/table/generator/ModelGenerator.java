@@ -29,7 +29,6 @@ public class ModelGenerator extends CGCodeGeneratorAbs<ClassComponentImpl, CGPro
         ST template = null;
         template = _group.getInstanceOf("DOC_TYPE");
         sb.append(template.render());
-        sb.append("\n\r");
         
         sb.toString();
     }
